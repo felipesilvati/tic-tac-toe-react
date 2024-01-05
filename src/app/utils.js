@@ -16,3 +16,19 @@ export const calculateWinner = (squares) => {
 
   return winningLine ? squares[winningLine[0]] : null;
 };
+
+export const getGameStatus = (squares, xIsNext) => {
+  const winner = calculateWinner(squares);
+  const isDraw = !winner && squares.every((square) => square !== null);
+  const nextPlayer = xIsNext ? 'X' : 'O';
+
+  if (isDraw) {
+    return 'Draw';
+  }
+
+  if (winner) {
+    return `Winner: ${winner}`;
+  }
+
+  return `Next player: ${nextPlayer}`;
+};

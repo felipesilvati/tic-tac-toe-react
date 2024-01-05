@@ -1,9 +1,9 @@
-import { calculateWinner } from './utils';
+import { calculateWinner, getGameStatus } from './utils';
+
+const X = 'X';
+const O = 'O';
 
 describe('calculateWinner', () => {
-  const X = 'X';
-  const O = 'O';
-
   // Horizontal Wins
   test.each([
     [X, [X, X, X, null, null, null, null, null, null]], // top row
@@ -40,5 +40,33 @@ describe('calculateWinner', () => {
   test('should return null in a draw', () => {
     const squares = [X, X, O, O, O, X, X, O, X];
     expect(calculateWinner(squares)).toBe(null);
+  });
+});
+
+describe('getGameStatus', () => {
+  // Test cases for wins
+  test.each([
+    [X, [X, X, X, null, O, O, null, null, null], `Winner: ${X}`], // X wins in a row
+    [O, [O, O, O, null, X, X, null, null, null], `Winner: ${O}`], // O wins in a row
+    [X, [X, null, null, X, null, null, X, null, null], `Winner: ${X}`], // X wins in a column
+    [O, [null, O, null, null, O, null, null, O, null], `Winner: ${O}`], // O wins in a column
+    [X, [X, null, null, null, X, null, null, null, X], `Winner: ${X}`], // X wins diagonally
+    [O, [null, null, O, null, O, null, O, null, null], `Winner: ${O}`] // O wins diagonally
+  ])('should declare the correct winner (%s)', (winner, squares, expected) => {
+    expect(getGameStatus(squares, true)).toBe(expected);
+  });
+
+  // Test cases for draws
+  test('should declare a draw when the game is a draw', () => {
+    const squares = [X, X, O, O, O, X, X, O, X];
+    expect(getGameStatus(squares, true)).toBe('Draw');
+  });
+
+  // Test cases for ongoing games
+  test.each([
+    ['Next player: O', [X, O, X, X, null, null, null, null, null], false], // O's turn next
+    ['Next player: X', [O, X, O, O, null, null, null, null, null], true] // X's turn next
+  ])('should indicate which player\'s turn is next (%s)', (expected, squares, xIsNext) => {
+    expect(getGameStatus(squares, xIsNext)).toBe(expected);
   });
 });
