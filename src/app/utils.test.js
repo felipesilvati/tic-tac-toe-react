@@ -1,18 +1,44 @@
 import { calculateWinner } from './utils';
 
-describe('utils', () => {
-  describe('calculateWinner', () => {
-    it('should return null if there is no winner', () => {
-      const squares = Array(9).fill(null);
-      expect(calculateWinner(squares)).toBe(null);
-    });
-    it('should return X if X is the winner', () => {
-      const squares = ['X', 'X', 'X', 'O', 'O', null, null, null, null];
-      expect(calculateWinner(squares)).toBe('X');
-    });
-    it('should return O if O is the winner', () => {
-      const squares = ['X', 'X', null, 'O', 'O', 'O', null, null, null];
-      expect(calculateWinner(squares)).toBe('O');
-    });
-  })
-})
+describe('calculateWinner', () => {
+  const X = 'X';
+  const O = 'O';
+
+  // Horizontal Wins
+  test.each([
+    [X, [X, X, X, null, null, null, null, null, null]], // top row
+    [O, [null, null, null, O, O, O, null, null, null]], // middle row
+    [X, [null, null, null, null, null, null, X, X, X]], // bottom row
+  ])('should identify a winner in a row (%s)', (winner, squares) => {
+    expect(calculateWinner(squares)).toBe(winner);
+  });
+
+  // Vertical Wins
+  test.each([
+    [X, [X, null, null, X, null, null, X, null, null]], // left column
+    [O, [null, O, null, null, O, null, null, O, null]], // middle column
+    [X, [null, null, X, null, null, X, null, null, X]], // right column
+  ])('should identify a winner in a column (%s)', (winner, squares) => {
+    expect(calculateWinner(squares)).toBe(winner);
+  });
+
+  // Diagonal Wins
+  test.each([
+    [O, [O, null, null, null, O, null, null, null, O]], // top-left to bottom-right
+    [X, [null, null, X, null, X, null, X, null, null]], // top-right to bottom-left
+  ])('should identify a winner on a diagonal (%s)', (winner, squares) => {
+    expect(calculateWinner(squares)).toBe(winner);
+  });
+
+  // No Winner
+  test('should return null when there is no winner', () => {
+    const squares = [X, O, X, X, O, O, O, X, X];
+    expect(calculateWinner(squares)).toBe(null);
+  });
+
+  // Draw
+  test('should return null in a draw', () => {
+    const squares = [X, X, O, O, O, X, X, O, X];
+    expect(calculateWinner(squares)).toBe(null);
+  });
+});
