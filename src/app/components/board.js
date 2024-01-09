@@ -36,12 +36,12 @@ export const Board = () => {
   const renderSquare = (i) => <Square key={`tic-tac-toe-square-${i}`} value={squares[i]} onClick={() => handleClick(i)} />;
 
   return (
-    <div>
-      <div className="mb-4">{getGameStatus(squares, xIsNext)}</div>
-      <div className="mb-4">{renderResetButton()}</div>
-      <div className="grid grid-cols-3 gap-2">
+    <>
+      <div className="mb-2 sm:mb-4">{getGameStatus(squares, xIsNext)}</div>
+      <div className="mb-2 sm:mb-4">{renderResetButton()}</div>
+      <div className="grid grid-cols-3 gap-1 sm:gap-2">
         {Array(9).fill(null).map((_, i) => renderSquare(i))}
       </div>
-    </div>
+    </>
   );
 }
