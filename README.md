@@ -1,5 +1,8 @@
 # Tic-tac-toe react
-A simple tic-tac-toe game using React
+A tic-tac-toe game made by myself using React
+
+## Features
+* Mobile responsiveness
 
 ## Getting Started
 
