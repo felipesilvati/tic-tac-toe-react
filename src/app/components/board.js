@@ -33,7 +33,7 @@ export const Board = () => {
     </button>
   );
 
-  const renderSquare = (i) => <Square value={squares[i]} onClick={() => handleClick(i)} />;
+  const renderSquare = (i) => <Square key={`tic-tac-toe-square-${i}`} value={squares[i]} onClick={() => handleClick(i)} />;
 
   return (
     <div>
