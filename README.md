@@ -1,6 +1,8 @@
 # Tic-tac-toe react
 A tic-tac-toe game made by myself using React
 
+![Game](images/tic-tac-toe.png)
+
 ## Features
 * Mobile responsiveness
 
